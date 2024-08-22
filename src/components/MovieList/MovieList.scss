@@ -1,0 +1,29 @@
+.movie-list {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 24px;
+  margin-bottom: 94px;
+  justify-content: center;
+  padding: 0 24px;
+
+  @include media-query('large') {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @include media-query('medium') {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include media-query('small') {
+    grid-template-columns: 1fr;
+  }
+}
+
+.movie-item {
+  grid-column: span 3;
+  grid-row: auto;
+
+  @include media-query('small') {
+    grid-column: span 1;
+  }
+}

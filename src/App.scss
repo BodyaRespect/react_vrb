@@ -1,3 +1,14 @@
-.starter {
-  font-size: 18px;
+* {
+  box-sizing: border-box;
 }
+
+h1 {
+  padding-left: 18px;
+}
+
+@import './assets/styles/variables.scss';
+@import './assets/styles/media.scss';
+@import './components/Navbar/Navbar.scss';
+@import './components/MovieItem/MovieItem.scss';
+@import './components/MovieList/MovieList.scss';
+@import './pages/MovieDetailsPage/MovieDetails.scss';
