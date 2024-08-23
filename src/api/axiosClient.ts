@@ -43,7 +43,7 @@ export const updateMovie = (
     });
 };
 
-export const deleteMovie = (id: string): Promise<void> => {
+export const deleteMovie = (id: number): Promise<void> => {
   return axios
     .delete(`${API_BASE_URL}/movies/${id}`)
     .then(() => {})

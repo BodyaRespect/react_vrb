@@ -1,43 +1,31 @@
-import React, { useEffect, useState } from 'react';
-import { Movie } from '../../types/Movie';
+import React from 'react';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { RootState } from '../../store/store';
+import { removeFavorite } from '../../store/reducers/favoriteReducer';
 import MovieList from '../../components/MovieList/MovieList';
 
 const Favorites: React.FC = () => {
-  const [favorites, setFavorites] = useState<Movie[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
+  const dispatch = useAppDispatch();
+  const favoriteMovies = useAppSelector(
+    (state: RootState) => state.favorites.favoriteMovies,
+  );
 
-  useEffect(() => {
-    const fetchFavorites = async () => {
-      try {
-        const data: React.SetStateAction<Movie[]> = [];
-
-        setFavorites(data);
-      } catch {
-        setError('Failed to load favorites.');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchFavorites();
-  }, []);
-
-  if (loading) {
-    return <p>Loading...</p>;
-  }
-
-  if (error) {
-    return <p>{error}</p>;
-  }
+  const handleMovieDeleted = (id: number) => {
+    dispatch(removeFavorite(id));
+  };
 
   return (
     <div className="favorites">
       <h1>Favorite Movies</h1>
-      {favorites.length === 0 ? (
-        <p>No favorite movies found.</p>
+
+      {favoriteMovies.length === 0 ? (
+        <p className="page-error">No favorite movies found.</p>
       ) : (
-        <MovieList movies={favorites} />
+        <MovieList
+          movies={favoriteMovies}
+          onMovieDeleted={handleMovieDeleted}
+          showDeleteButton={false}
+        />
       )}
     </div>
   );

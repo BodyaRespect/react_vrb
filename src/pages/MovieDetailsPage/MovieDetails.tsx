@@ -1,7 +1,7 @@
 import React, { useEffect, useReducer, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import { getMovieById, updateMovie } from '../../api/axiosClient';
-import movieReducer from '../../store/reducers/movieReducer';
+import movieReducer from '../../utils/movieReducer';
 import { Movie } from '../../types/Movie';
 import { validateFormData, validateImageUrl } from '../../utils/validation';
 import { MovieActionTypes } from '../../types/MovieActionTypes';
@@ -69,9 +69,11 @@ const MovieDetails: React.FC = () => {
     const { name, value } = e.target;
 
     if (name === 'actors') {
+      const actorsArray = value.split(',').map(actor => actor.trim());
+
       dispatch({
         type: MovieActionTypes.UPDATE_MOVIE,
-        payload: { ...formData, [name]: value.split(',') },
+        payload: { ...formData, [name]: actorsArray },
       });
     } else if (name === 'image') {
       if (validateImageUrl(value) || value === '') {
@@ -85,6 +87,11 @@ const MovieDetails: React.FC = () => {
           payload: 'Invalid image URL.',
         });
       }
+    } else if (name === 'releaseDate') {
+      dispatch({
+        type: MovieActionTypes.UPDATE_MOVIE,
+        payload: { ...formData, [name]: value },
+      });
     } else {
       dispatch({
         type: MovieActionTypes.UPDATE_MOVIE,
@@ -177,7 +184,7 @@ const MovieDetails: React.FC = () => {
               <input
                 type="text"
                 name="actors"
-                value={formData?.actors || ''}
+                value={formData?.actors.join(', ') || ''}
                 onChange={handleInputChange}
                 className="movie-details__input"
               />
@@ -236,6 +243,24 @@ const MovieDetails: React.FC = () => {
                   className="movie-details__input"
                 />
               </>
+            )}
+          </label>
+        </p>
+
+        <p className="movie-details__text">
+          <label>
+            Release Date:
+            <br />
+            {isEditing ? (
+              <input
+                type="date"
+                name="releaseDate"
+                value={formData?.releaseDate || ''}
+                onChange={handleInputChange}
+                className="movie-details__input"
+              />
+            ) : (
+              movie.releaseDate
             )}
           </label>
         </p>

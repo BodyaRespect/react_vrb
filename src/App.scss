@@ -8,7 +8,13 @@ h1 {
 
 @import './assets/styles/variables.scss';
 @import './assets/styles/media.scss';
+@import './assets/styles/utils.scss';
+
 @import './components/Navbar/Navbar.scss';
+@import './components/Loader/Loader.scss';
+@import './components/MovieForm/MovieForm.scss';
 @import './components/MovieItem/MovieItem.scss';
 @import './components/MovieList/MovieList.scss';
+
+@import './pages/Home/Home.scss';
 @import './pages/MovieDetailsPage/MovieDetails.scss';
